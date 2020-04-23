@@ -1,0 +1,56 @@
+<div class="modal-header align-self-center">
+  <h4 class="modal-title" id="modal-basic-title">{{ tittle }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="onCancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form" autocomplete="off" novalidate fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutGap="10px">
+
+    <!-- <div class="form-row"> -->
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input
+               id="name"
+               type="text"
+               class="form-control"
+               formControlName="name"
+               [ngClass]="{ 'is-invalid': hasError('name') && form.get('name').touched }"
+               placeholder="Nome" />
+
+        <div class="invalid-feedback" *ngIf="form.get('name').hasError('required') && form.get('name').touched">
+          Campo obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <input
+               id="description"
+               type="text"
+               class="form-control"
+               formControlName="description"
+               [ngClass]="{ 'is-invalid': hasError('description') && form.get('description').touched }"
+               placeholder="Descrição" />
+
+        <div class="invalid-feedback" *ngIf="form.get('description').hasError('required') && form.get('description').touched">
+          Campo obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="checkbox-active" formControlName="active">
+          <label class="custom-control-label" for="checkbox-active">Ativo</label>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+
+  </form>
+</div>
+
+<div class="modal-footer" align="center">
+  <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="onSubmit()">Salvar</button>
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancelar</button>
+</div>

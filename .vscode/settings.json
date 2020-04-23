@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/5bcdde96-65ca-446a-8127-b03fcf0301ac/resourceGroups/Sistema-Engenharia/providers/Microsoft.Web/sites/sistema-engenharia",
+    "appService.deploySubpath": "engenharia-app\\dist\\engenharia-app"
+}

@@ -1,0 +1,32 @@
+<div class="container">
+  <form [formGroup]="loginForm" class="form-signin">
+    <img class="mb-4" src="" alt="" width="72" height="72" />
+    <h1 align="center" class="title">Entrar</h1>
+    <div class="form-group">
+      <label for="email" class="sr-only">Email</label>
+      <input type="email" class="form-control" placeholder="Email" formControlName="email" [ngClass]="{
+        'is-invalid': loginForm.get('email').errors && loginForm.get('email').touched
+      }" />
+      <div *ngIf="loginForm.get('email').errors" class="invalid-feedback">
+        <label *ngIf="loginForm.get('email').errors?.required">Insira o Email.</label>
+        <label *ngIf="loginForm.get('email').errors?.email">Email inválido.</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" class="form-control" placeholder="Senha" formControlName="password" [ngClass]="{
+        'is-invalid': loginForm.get('password').errors && loginForm.get('password').touched
+      }" />
+      <div *ngIf="loginForm.get('password').errors" class="invalid-feedback">
+        <label *ngIf="loginForm.get('password').errors?.required">Insira a senha.</label>
+      </div>
+    </div>
+    <button [disabled]="!loginForm.valid" (click)="login()" class="btn btn-lg btn-primary btn-block" type="submit">
+      <!-- <button (click)="login()" class="btn btn-lg btn-primary btn-block" type="submit"> -->
+      Entrar
+    </button>
+    <div style="text-align: center">
+      <a align="center" class="form-link" routerLink="/registration">Esqueceu a senha?</a>
+    </div>
+  </form>
+</div>

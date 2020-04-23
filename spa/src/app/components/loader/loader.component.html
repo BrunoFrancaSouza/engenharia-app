@@ -1,0 +1,12 @@
+<div *ngIf="isLoading | async" [class.loader-hidden]="!isLoading">
+    <div class="loader-overlay">
+        <div>
+            <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div id="cover-spin"></div> -->
+<!-- How To Use -> http://www.menucool.com/9499/CSS-loading-spinner-with-a-semi-transparent-background -->

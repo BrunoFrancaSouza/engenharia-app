@@ -1,0 +1,117 @@
+<div class="container roles-page">
+
+  <mat-toolbar id="toolbar" color="secondary">
+    <mat-toolbar-row class="table-header">
+      Roles
+
+      <button mat-icon-button color="accent" title="Recarregar" (click)="getRoles()">
+        <mat-icon aria-label="Example icon-button with a heart icon">refresh</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="table-header-actions">
+
+    <div *ngIf="getCheckedRoles().length == 0; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+
+
+      <button mat-button color="accent" title="Adicionar" (click)="addRole()">
+        <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+      </button>
+
+      <div class="table-header-actions has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input class="form-control" (keyup)="filterRoles($event.target.value)" placeholder="Buscar">
+      </div>
+
+    </ng-template>
+
+    <ng-template #elseBlock>
+      <div class="container-fluid delete-multiple-rows">
+        <div>
+          {{ getTextSelectedItems() }}
+        </div>
+        <div>
+          <button mat-icon-button color="warn" (click)="deleteSelectedRoles()">
+            <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+
+
+  <div class="table-responsive">
+    <table id="table-roles" class="table table-hover text-center table-bordered">
+      <thead class="thead">
+        <tr>
+
+          <!-- Select All -->
+          <th>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkbox-header" [(ngModel)]="checkedAll"
+                     (change)="checkUncheckAll()">
+              <label class="custom-control-label" for="checkbox-header"></label>
+            </div>
+          </th>
+
+          <th class="sortable" *ngFor="let column of displayedColumns; let i = index" scope="col" (click)="sortTable(i + 1)">{{column}}</th>
+
+          <!-- Actions -->
+          <!-- <th *ngIf="hasData()"></th>
+          <th *ngIf="hasData()"></th> -->
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let role of filteredRoles | paginate: { id: 'pagination', 
+        itemsPerPage: itemsPerPage, 
+        currentPage: currentPage, 
+        totalItems: totalRecords }"
+            valign="center">
+
+          <!-- Select All -->
+          <td scope="row">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" [(ngModel)]="role.checked" [id]="role.id"
+                     name="checkbox-role" (change)="onChangeCheckbox()">
+              <label class="custom-control-label" [for]="role.id"></label>
+            </div>
+          </td>
+
+          <td scope="row" class="editable" (click)="onRowClick(role)">{{role.id}}</td>
+          <td (click)="onRowClick(role)" class="editable">{{role.name}}</td>
+          <td class="editable" (click)="onRowClick(role)">{{role.description}}</td>
+          <td class="editable" (click)="onRowClick(role)">{{role.active}}</td>
+
+          <!-- Actions -->
+          <!-- <td class="table-header" *ngIf="hasData()">
+            <button mat-icon-button color="accent" title="Editar" (click)="editRole(role)">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="accent" title="Deletar" (click)="deleteRole(role)">
+              <mat-icon aria-label="Edit">delete</mat-icon>
+            </button>
+
+          </td> -->
+
+        </tr>
+
+      </tbody>
+    </table>
+    <div *ngIf="isLoading() == true" class="container-fluid no-results">
+      Carregando
+    </div>
+    <div *ngIf="!hasData() && isLoading() == false" class="container-fluid no-results">
+      Sem registros
+    </div>
+  </div>
+  <div class="text-right">
+    <pagination-controls id="pagination" (pageChange)="currentPage = $event" previousLabel="Anterior" nextLabel="Próximo">
+    </pagination-controls>
+  </div>
+
+</div>

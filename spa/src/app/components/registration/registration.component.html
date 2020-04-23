@@ -1,0 +1,82 @@
+<div class="container">
+  <h1 align="center" class="title">Registro de Usuário</h1>
+  <form [formGroup]="registerForm" class="form-register">
+    <div class="form-group required">
+      <label for="">Nome Completo:</label>
+      <input type="text" class="form-control" formControlName="fullName" [ngClass]="{
+                'is-invalid': registerForm.get('fullName').errors && registerForm.get('fullName').touched,
+                'is-valid': registerForm.get('fullName').valid
+              }" placeholder="Nome" />
+      <div *ngIf=" registerForm.get('fullName').hasError('required') && registerForm.get('fullName').touched"
+        class="invalid-feedback">
+        Campo obrigatório.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Email:</label>
+      <input class="form-control" type="text" formControlName="email" [ngClass]="{
+                'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched,
+                'is-valid': registerForm.get('email').valid
+              }" placeholder="Email" />
+      <div *ngIf="registerForm.get('email').errors" class="invalid-feedback">
+        <label *ngIf="registerForm.get('email').errors?.required">Email é obrigatório.</label>
+        <label *ngIf="registerForm.get('email').errors?.email">Email inválido.</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Usuário:</label>
+      <input class="form-control" type="text" formControlName="userName" [ngClass]="{
+                'is-invalid': registerForm.get('userName').errors && registerForm.get('userName').touched,
+                'is-valid': registerForm.get('userName').valid
+              }" placeholder="Usuário" />
+      <div *ngIf=" registerForm.get('userName').hasError('required') && registerForm.get('userName').touched"
+        class="invalid-feedback">
+        Campo obrigatório.
+      </div>
+    </div>
+    <div formGroupName="passwords">
+      <div class="form-group">
+        <label for="">Senha:</label>
+        <input class="form-control" type="password" formControlName="password" [ngClass]="{
+                  'is-invalid': registerForm.get('passwords.password').errors && registerForm.get('passwords.password').touched,
+                  'is-valid': registerForm.get('passwords.password').valid
+                }" placeholder="Senha" />
+        <div
+          *ngIf="registerForm.get('passwords.password').hasError('minlength') && registerForm.get('passwords.password').touched"
+          class="invalid-feedback">
+          Senha deve conter no mínimo 4 caracteres
+        </div>
+        <div
+          *ngIf="registerForm.get('passwords.password').hasError('required') && registerForm.get('passwords.password').touched"
+          class="invalid-feedback">
+          Campo obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="">Confirmar Senha:</label>
+        <input class="form-control" type="password" formControlName="confirmPassword" [ngClass]="{
+                  'is-invalid': (registerForm.get('passwords.confirmPassword').errors && registerForm.get('passwords.confirmPassword').touched) ||
+                    (registerForm.get('passwords.confirmPassword').hasError('mismatch') && registerForm.get('passwords.confirmPassword').touched),
+                  'is-valid': registerForm.get('passwords.confirmPassword').valid
+                }" placeholder="Senha" />
+        <div
+          *ngIf="registerForm.get('passwords.confirmPassword').hasError('required') && registerForm.get('passwords.confirmPassword').touched"
+          class="invalid-feedback">
+          Confirme a senha
+        </div>
+        <div
+          *ngIf="registerForm.get('passwords.confirmPassword').hasError('mismatch') && registerForm.get('passwords.confirmPassword').touched"
+          class="invalid-feedback">
+          Confirmação incorreta
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-8 offset-md-2">
+        <button class="btn btn-lg btn-success btn-block" [disabled]="!registerForm.valid" (click)="registerUser()">
+          Cadastre-se
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

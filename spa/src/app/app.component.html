@@ -1,0 +1,57 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" >
+    <mat-toolbar id="toolbar" color="primary" onresize="setSideNavFixedTop()">
+        <mat-toolbar-row class="toolbar">
+            <div>
+                <div *ngIf="!isLoggedIn()">
+                    <button mat-button>
+                        <mat-icon>home</mat-icon>
+                        Página Inicial
+                    </button>
+                </div>
+                <div *ngIf="isLoggedIn()">
+                    <button mat-button>
+                        <mat-icon *ngIf="isLoggedIn()" (click)="snav.toggle()">menu</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div fxShow="true" fxHide.lt-sm="true">
+                <a *ngFor="let menu of menuOptions" mat-button routerLink="./roles">{{ menu }}</a>
+            </div>
+            <span class="spacer"></span>
+            <div class="btn-group">
+                <button *ngIf="isLoggedIn()" mat-button type="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <mat-icon>account_circle</mat-icon>
+                    <span fxShow="true" fxHide.lt-sm="true">Usuário</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Separated link</a>
+                </div>
+            </div>
+        </mat-toolbar-row>
+        <mat-toolbar-row *ngIf="isLoggedIn() && hasMenuOptions()" class="toolbar" fxShow="false" fxHide.lt-sm="false">
+            <a *ngFor="let menu of menuOptions" mat-button routerLink=".">{{ menu }}</a>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+        <!-- <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56"> -->
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+            [fixedTopGap]="mobileQuery.matches ? '112' : '56'">
+            <mat-nav-list>
+                <!-- <a mat-list-item routerLink="." *ngFor="let option of options">{{ option }}</a> -->
+                <a mat-list-item routerLink="/login" onclick="$('#cover-spin').show(0)">Login</a>
+                <a mat-list-item routerLink="/registration" onclick="$('#cover-spin').hide(0)">Registrar!</a>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <app-loader></app-loader>
+            <router-outlet (activate)='onActivate($event)'></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
