@@ -16,7 +16,9 @@ public class AppContext : IdentityDbContext<User, Role, int, IdentityUserClaim<i
     //}
     private IConfiguration Configuration { get; }
 
-    public AppContext(IConfiguration configuration)
+    //public AppContext(IConfiguration configuration)
+    public AppContext(IConfiguration configuration, DbContextOptions<AppContext> options)
+        : base(options)
     {
         Configuration = configuration;
     }
@@ -24,7 +26,8 @@ public class AppContext : IdentityDbContext<User, Role, int, IdentityUserClaim<i
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseMySql(Configuration.GetConnectionString("ApplicationDB"));
+            //optionsBuilder.UseMySql(Configuration.GetConnectionString("ApplicationDB"));
+            throw new System.ArgumentNullException(nameof(optionsBuilder));
     }
 
     //public DbSet<User> Usuarios { get; set; }

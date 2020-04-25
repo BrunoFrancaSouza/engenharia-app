@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System;
 using System.Text;
 
 namespace Engenharia.WebApi
@@ -27,16 +28,29 @@ namespace Engenharia.WebApi
 
         public IConfiguration Configuration { get; }
 
+        private string MySqlUrl;
+        private string MySqlPort;
+        private string MySqlDatabase;
+        private string MySqlUser;
+        private string MySqlPassword;
+
+        private string JwtSecret;
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<EngenhariaContext>(x => x.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
 
-            //services.AddDbContext<AppContext>(x => x.UseMySql(Configuration.GetConnectionString("ApplicationDB")));
-            //services.AddDbContext<LogContext>(x => x.UseMySql(Configuration.GetConnectionString("LogDB")));
+            LoadEnvironmentVariables();
 
-            services.AddDbContext<AppContext>(x => x.UseMySql(Configuration.GetConnectionString("ApplicationDB")));
-            services.AddDbContext<LogContext>(x => x.UseMySql(Configuration.GetConnectionString("LogDB")));
+            //throw new Exception($"{GetApplicationDbConnectionString()}");
+
+            var applicationDbConnectionString = GetApplicationDbConnectionString();
+            var logDbConnectionString = GetApplicationDbConnectionString();
+
+
+            services.AddDbContext<AppContext>(x => x.UseMySql(applicationDbConnectionString));
+            services.AddDbContext<LogContext>(x => x.UseMySql(logDbConnectionString));
 
             IdentityBuilder builder = services.AddIdentityCore<User>(options =>
             {
@@ -60,7 +74,7 @@ namespace Engenharia.WebApi
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtSecret)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
@@ -68,6 +82,8 @@ namespace Engenharia.WebApi
                 });
 
             services.AddAutoMapper();
+
+            services.AddCors();
 
             services.AddMvc(options =>
             {
@@ -86,7 +102,7 @@ namespace Engenharia.WebApi
             //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             //services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
-            services.AddCors();
+            //services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,8 +122,36 @@ namespace Engenharia.WebApi
 
             //app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseCors(c => c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(c => c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseMvc();
+        }
+
+        private void LoadEnvironmentVariables()
+        {
+            MySqlUrl = Configuration["MYSQL_URL"];
+            MySqlPort = Configuration["MYSQL_PORT"];
+            MySqlDatabase = Configuration["MYSQL_DATABASE"];
+            MySqlUser = Configuration["MYSQL_USER"];
+            MySqlPassword = Configuration["MYSQL_PASSWORD"];
+            //MySqlPassword = Configuration["MYSQL_ROOT_PASSWORD"];
+
+            JwtSecret = Configuration["JWT_SECRET"];
+        }
+
+        public string GetApplicationDbConnectionString()
+        {
+            return GetMySqlConnectionString(MySqlUrl, MySqlPort, MySqlDatabase, MySqlUser, MySqlPassword );
+        }
+
+        private string GetLogDbConnectionString()
+        {
+            return GetMySqlConnectionString(MySqlUrl, MySqlPort, MySqlDatabase, MySqlUser, MySqlPassword);
+        }
+
+        private string GetMySqlConnectionString(string server, string port, string dataBase, string user, string password)
+        {
+            var result = $"Server={server};port={port};DataBase={dataBase};Uid={user};Pwd={password}";
+            return result;
         }
     }
 }

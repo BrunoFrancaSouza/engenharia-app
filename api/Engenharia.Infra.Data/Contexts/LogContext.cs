@@ -7,7 +7,8 @@ namespace Engenharia.Infra.Data.Contexts
     {
         private IConfiguration Configuration { get; }
 
-        public LogContext(IConfiguration configuration)
+        public LogContext(IConfiguration configuration, DbContextOptions<LogContext> options)
+        : base(options)
         {
             Configuration = configuration;
         }
@@ -15,7 +16,8 @@ namespace Engenharia.Infra.Data.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseMySql(Configuration.GetConnectionString("LogDB"));
+                //optionsBuilder.UseMySql(Configuration.GetConnectionString("LogDB"));
+                throw new System.ArgumentNullException(nameof(optionsBuilder));
         }
 
         //public DbSet<User> Usuarios { get; set; }

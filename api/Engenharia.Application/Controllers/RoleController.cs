@@ -32,7 +32,7 @@ namespace Engenharia.WebApi.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var response = roleService.GetAll();
+                var response = roleService.GetAll();
             return Ok(response);
         }
 

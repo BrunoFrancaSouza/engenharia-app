@@ -5,6 +5,16 @@
    "version": "0.2.0",
    "configurations": [
        {
+           "name": "Docker .NET Core Attach (Preview)",
+           "type": "docker",
+           "request": "attach",
+           "platform": "netCore",
+           "requireExactSource": false,
+           "sourceFileMap": {
+               "/src": "${workspaceFolder}"
+           }
+       },
+       {
            "type": "chrome",
            "request": "launch",
            "name": "Launch Chrome",
