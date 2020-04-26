@@ -13,13 +13,13 @@ import { CrudService } from '../crud/crud.service';
 })
 export class RoleService extends CrudService<Role, number> {
 
-  baseUrl = environment.apiEndpoint + '/role';
+  baseUrl = environment.apiEndpoint + '/api/role';
 
   constructor(public http: HttpClient,
     private notificationService: NotificationService,
     private errorService: ErrorService
   ) {
-    super(http, `${environment.apiEndpoint}/role`);
+    super(http, `${environment.apiEndpoint}/api/role`);
   }
 
   // getAll(): Observable<Role[]> {

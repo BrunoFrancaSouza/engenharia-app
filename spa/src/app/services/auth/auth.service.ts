@@ -10,13 +10,16 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
   // baseUrl = 'https://localhost:5001/api/auth/';
-  baseUrl = environment.apiEndpoint + '/auth';
+  baseUrl = environment.apiEndpoint + '/api/auth';
   jwtHelper = new JwtHelperService();
   decodedToken: any;
 
   constructor(private http: HttpClient) { }
 
   login(model: any) {
+    console.log("environment.apiEndpoint ->", environment.apiEndpoint);
+    console.log("baseUrl ->", this.baseUrl);
+
     return this.http
       .post(`${this.baseUrl}/Login`, model).pipe(
         map((response: any) => {
