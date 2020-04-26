@@ -52,7 +52,7 @@ services:
       # - ${SPA_PORT}:80
       - 20001:80
     environment:
-      API_URL: "${API_URL}:80/api"
+      API_URL: "http://${API_URL}:80/api"
     networks:
       - engenharia-app-network
 
