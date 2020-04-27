@@ -14,8 +14,9 @@ services:
       context: ./nginx
     ports:
       - "80:80"
-    # volumes:
-    #   - spa-files:/usr/src/app
+    volumes:
+      #   - spa-files:/usr/src/app
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - engenharia-network
 
@@ -63,6 +64,8 @@ services:
       - "${HOST_SPA_PORT}:80"
     environment:
       API_URL: "http://${API_URL}"
+      VIRTUAL_HOST: "${SPA_URL}"
+      VIRTUAL_PORT: "80"
     # volumes:
     #   - spa-files:/usr/src/app/public
     networks:
