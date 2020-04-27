@@ -43,7 +43,7 @@ services:
     build:
       context: ./api
     ports:
-      - "${API_PORT}:${CONTAINER_API_PORT}"
+      - "${HOST_API_PORT}:${CONTAINER_API_PORT}"
     environment:
       MYSQL_URL: database
       MYSQL_PORT: "${CONTAINER_MYSQL_PORT}"
