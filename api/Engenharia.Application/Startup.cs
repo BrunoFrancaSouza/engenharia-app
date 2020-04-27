@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -140,7 +141,7 @@ namespace Engenharia.WebApi
 
         public string GetApplicationDbConnectionString()
         {
-            return GetMySqlConnectionString(MySqlUrl, MySqlPort, MySqlDatabase, MySqlUser, MySqlPassword );
+            return GetMySqlConnectionString(MySqlUrl, MySqlPort, MySqlDatabase, MySqlUser, MySqlPassword);
         }
 
         private string GetLogDbConnectionString()
