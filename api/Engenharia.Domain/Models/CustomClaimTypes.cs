@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Engenharia.Domain.Auth
+namespace Engenharia.Domain.Models
 {
-    public class CustomClaimType
+    public class CustomClaimTypes
     {
         public const string Permission = "permission";
     }
