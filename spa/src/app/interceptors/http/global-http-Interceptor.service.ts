@@ -5,19 +5,34 @@ import { finalize, catchError, retry } from "rxjs/operators";
 import { LoaderService } from '../../services/loader/loader.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/notification/notification.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Injectable()
 export class GlobalHttpInterceptorService implements HttpInterceptor {
 
     constructor(public router: Router,
         public loaderService: LoaderService,
-        private notification: NotificationService) { }
+        private notification: NotificationService,
+        private authService: AuthService) { }
 
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.loaderService.show();
 
-        return next.handle(req).pipe(
+        const token = this.authService.getToken();
+        var clonedRequest: HttpRequest<any>;
+
+        if (token) {
+            clonedRequest = req.clone({
+                headers: req.headers.set("Authorization", `Bearer ${token}`)
+            })
+        }
+        else {
+            clonedRequest = req.clone()
+        }
+
+        // return next.handle(req).pipe(
+        return next.handle(clonedRequest).pipe(
 
             finalize(() => this.loaderService.hide()), // Loader Component
             catchError((error) => {
