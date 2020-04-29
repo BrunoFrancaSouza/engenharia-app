@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Engenharia.Infra.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20200423143501_CreateTables")]
-    partial class CreateTables
+    [Migration("20200428130012_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

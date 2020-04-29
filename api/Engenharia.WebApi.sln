@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - CrossCuting", "4.2 - 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engenharia.Service", "Engenharia.Service\Engenharia.Service.csproj", "{E14FA113-A936-4A78-A5CE-9604C7395033}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engenharia.Infra.CrossCuting", "Engenharia.Infra.CrossCuting\Engenharia.Infra.CrossCuting.csproj", "{DA17A714-CB45-4450-82B5-C84168112A37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{E14FA113-A936-4A78-A5CE-9604C7395033}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E14FA113-A936-4A78-A5CE-9604C7395033}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E14FA113-A936-4A78-A5CE-9604C7395033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA17A714-CB45-4450-82B5-C84168112A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA17A714-CB45-4450-82B5-C84168112A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA17A714-CB45-4450-82B5-C84168112A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA17A714-CB45-4450-82B5-C84168112A37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 		{3410E6AD-0685-4AB4-9DD2-60C0B0E462D0} = {E65707B8-10A7-44CD-9781-12BB86184DE9}
 		{5896D96C-714F-4710-8F32-4406EF1B3038} = {E65707B8-10A7-44CD-9781-12BB86184DE9}
 		{E14FA113-A936-4A78-A5CE-9604C7395033} = {DE2F3CA5-2695-4CDE-85DA-FD06969176B4}
+		{DA17A714-CB45-4450-82B5-C84168112A37} = {5896D96C-714F-4710-8F32-4406EF1B3038}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8E8A8E5-9CCC-4B48-9F63-5D0C11F01853}

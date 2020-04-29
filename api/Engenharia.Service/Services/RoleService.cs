@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Engenharia.Service.Services
@@ -63,6 +62,15 @@ namespace Engenharia.Service.Services
 
             if (result.Succeeded)
                 return mapper.Map<RoleDto>(role);
+
+            //var adminRole = await roleManager.FindByNameAsync(role.Name);
+            //await roleManager.AddClaimAsync(adminRole, new Claim(CustomClaimTypes.Permission, Permissions.RoleCreate.ValueToString()));
+            //await roleManager.AddClaimAsync(adminRole, new Claim(CustomClaimTypes.Permission, Permissions.RoleView.ValueToString()));
+
+            //var superAdmin = await userManager.FindByIdAsync("1");
+            ////await userManager.CreateAsync(superAdmin);
+            //await userManager.AddToRoleAsync(superAdmin, role.Name);
+
 
             var error = result.Errors.First();
 
