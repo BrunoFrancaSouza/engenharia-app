@@ -129,7 +129,8 @@ namespace Engenharia.WebApi.Controllers
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config.GetSection("AppSettings:Token").Value));
+            //var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config.GetSection("AppSettings:Token").Value));
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config["JWT_SECRET"]));
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
