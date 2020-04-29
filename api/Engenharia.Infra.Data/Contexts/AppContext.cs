@@ -10,13 +10,8 @@ public class AppContext : IdentityDbContext<User, Role, int, IdentityUserClaim<i
                                                    IdentityUserLogin<int>, IdentityRoleClaim<int>,
                                                    IdentityUserToken<int>>
 {
-    //public EngenhariaContext(DbContextOptions<EngenhariaContext> options) : base(options)
-    //{
-
-    //}
     private IConfiguration Configuration { get; }
 
-    //public AppContext(IConfiguration configuration)
     public AppContext(IConfiguration configuration, DbContextOptions<AppContext> options)
         : base(options)
     {
@@ -37,8 +32,9 @@ public class AppContext : IdentityDbContext<User, Role, int, IdentityUserClaim<i
         //Aplica alterações
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Role>(new RoleMap().Configure);
-        modelBuilder.Entity<UserRole>(new UserRoleMap().Configure);
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
+        modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
 
     }
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Engenharia.Application.Authorization;
+using Engenharia.Application.Database_Initializers;
 using Engenharia.Application.Extensions;
 using Engenharia.Domain.Identity;
 using Engenharia.Infra.Data.Contexts;
@@ -33,6 +34,9 @@ namespace Engenharia.WebApi
         private string MySqlDatabase;
         private string MySqlUser;
         private string MySqlPassword;
+
+        private string AdminEmail;
+        private string AdminPassword;
 
         private string JwtSecret;
 
@@ -108,7 +112,7 @@ namespace Engenharia.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -119,6 +123,8 @@ namespace Engenharia.WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            IdentityInitializer.SeedData(userManager, roleManager, AdminEmail, AdminPassword);
 
             app.ConfigureCustomExceptionMiddleware();
 
@@ -136,6 +142,9 @@ namespace Engenharia.WebApi
             MySqlUser = Configuration["MYSQL_USER"];
             MySqlPassword = Configuration["MYSQL_PASSWORD"];
             //MySqlPassword = Configuration["MYSQL_ROOT_PASSWORD"];
+
+            AdminEmail = Configuration["ADMIN_EMAIL"];
+            AdminPassword = Configuration["ADMIN_PASSWORD"];
 
             JwtSecret = Configuration["JWT_SECRET"];
         }

@@ -1,13 +1,10 @@
 ﻿using Engenharia.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Engenharia.Infra.Data.Mapping
 {
-    public class UserRoleMap : IEntityTypeConfiguration<UserRole>
+    public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
@@ -22,6 +19,7 @@ namespace Engenharia.Infra.Data.Mapping
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
+
         }
     }
 }
