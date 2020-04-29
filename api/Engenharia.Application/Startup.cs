@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Engenharia.Application.Authorization;
 using Engenharia.Application.Extensions;
 using Engenharia.Domain.Identity;
 using Engenharia.Infra.Data.Contexts;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -15,7 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using System;
 using System.Text;
 
 namespace Engenharia.WebApi
@@ -103,7 +102,9 @@ namespace Engenharia.WebApi
             //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             //services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
-            //services.AddCors();
+            //Register the Permission policy handlers
+            services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, PermissionHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

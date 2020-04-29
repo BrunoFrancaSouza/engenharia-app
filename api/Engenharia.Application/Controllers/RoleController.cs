@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Engenharia.Application.Authorization;
+using Engenharia.Domain.Auth;
 using Engenharia.Domain.DTOs;
 using Engenharia.Domain.Identity;
 using Engenharia.Service.Services;
@@ -28,15 +30,17 @@ namespace Engenharia.WebApi.Controllers
             roleService = new RoleService<AppContext>(roleManager, userManager, mapper);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [HasPermission(Permissions.RoleView)]
         [HttpGet]
         public IActionResult GetAll()
         {
-                var response = roleService.GetAll();
+            var response = roleService.GetAll();
             return Ok(response);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [HasPermission(Permissions.RoleView)]
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(string id)
         {
@@ -44,7 +48,8 @@ namespace Engenharia.WebApi.Controllers
             return Ok(response);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [HasPermission(Permissions.RoleView)]
         [HttpGet("GetByName")]
         public async Task<IActionResult> GetByName(string roleName)
         {
@@ -52,7 +57,9 @@ namespace Engenharia.WebApi.Controllers
             return Ok(response);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        //[Authorize(Permissions.RoleCreate.ValueToString())]
+        [HasPermission(Permissions.RoleCreate)]
         [HttpPost]
         public async Task<IActionResult> Create(RoleDto roleDto)
         {
@@ -60,7 +67,8 @@ namespace Engenharia.WebApi.Controllers
             return Created("GetRole", response);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [HasPermission(Permissions.RoleUpdate)]
         [HttpPut]
         public async Task<IActionResult> Update(RoleDto roleDto)
         {
@@ -68,7 +76,8 @@ namespace Engenharia.WebApi.Controllers
             return Created("GetRole", response);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [HasPermission(Permissions.RoleDelete)]
         [HttpDelete("{roleId}")]
         public async Task<IActionResult> Delete(int roleId)
         {
@@ -76,7 +85,8 @@ namespace Engenharia.WebApi.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [HasPermission(Permissions.RoleDelete)]
         [HttpDelete("DeleteMany")]
         public async Task<IActionResult> DeleteMany([FromQuery] string[] roleIds)
         {
