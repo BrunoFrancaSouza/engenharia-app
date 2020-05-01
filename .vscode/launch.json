@@ -4,22 +4,22 @@
    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
    "version": "0.2.0",
    "configurations": [
-       {
-           "name": "Docker .NET Core Attach (Preview)",
-           "type": "docker",
-           "request": "attach",
-           "platform": "netCore",
-           "requireExactSource": false,
-           "sourceFileMap": {
-               "/src": "${workspaceFolder}"
-           }
-       },
+    //    {
+    //        "name": "Docker .NET Core Attach (Preview)",
+    //        "type": "docker",
+    //        "request": "attach",
+    //        "platform": "netCore",
+    //        "requireExactSource": false,
+    //        "sourceFileMap": {
+    //            "/src": "${workspaceFolder}"
+    //        }
+    //    },
        {
            "type": "chrome",
            "request": "launch",
            "name": "Launch Chrome",
            "url": "http://localhost:4200/login",
-           "webRoot": "${workspaceFolder}/engenharia-app",
+           "webRoot": "${workspaceFolder}/spa",
        },
 
         {
