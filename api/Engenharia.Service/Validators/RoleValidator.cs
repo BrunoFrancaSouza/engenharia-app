@@ -1,8 +1,6 @@
-﻿using Engenharia.Domain.Identity;
+﻿using Engenharia.Domain.Entities.Identity;
 using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Engenharia.Service.Validators
 {

@@ -2,7 +2,8 @@
 using Engenharia.Application.Authorization;
 using Engenharia.Domain.Auth;
 using Engenharia.Domain.DTOs;
-using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
+//using Engenharia.Domain.Identity;
 using Engenharia.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -31,16 +32,16 @@ namespace Engenharia.WebApi.Controllers
         }
 
         //[AllowAnonymous]
-        [HasPermission(Permissions.RoleView)]
+        [HasPermission(Permissions.RoleRead)]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var response = roleService.GetAll();
+            var response = await roleService.GetAll();
             return Ok(response);
         }
 
         //[AllowAnonymous]
-        [HasPermission(Permissions.RoleView)]
+        [HasPermission(Permissions.RoleRead)]
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(string id)
         {
@@ -49,7 +50,7 @@ namespace Engenharia.WebApi.Controllers
         }
 
         //[AllowAnonymous]
-        [HasPermission(Permissions.RoleView)]
+        [HasPermission(Permissions.RoleRead)]
         [HttpGet("GetByName")]
         public async Task<IActionResult> GetByName(string roleName)
         {
@@ -91,7 +92,16 @@ namespace Engenharia.WebApi.Controllers
         public async Task<IActionResult> DeleteMany([FromQuery] string[] roleIds)
         {
             var response = await roleService.DeleteMany(roleIds);
-            return Ok();
+            return Ok(response);
+        }
+
+        //[AllowAnonymous]
+        [HasPermission(Permissions.RoleUpdate)]
+        [HttpPost("UpdatePermissions")]
+        public async Task<IActionResult> UpdatePermissions(RoleUpdatePermissionsDto roleUpdatePermissionsDto)
+        {
+            var response = await roleService.UpdatePermissions(roleUpdatePermissionsDto);
+            return Ok(response);
         }
 
     }

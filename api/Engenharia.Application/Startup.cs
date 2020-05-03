@@ -2,7 +2,7 @@
 using Engenharia.Application.Authorization;
 using Engenharia.Application.Database_Initializers;
 using Engenharia.Application.Extensions;
-using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
 using Engenharia.Infra.Data.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -43,15 +43,10 @@ namespace Engenharia.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<EngenhariaContext>(x => x.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
-
             LoadEnvironmentVariables();
-
-            //throw new Exception($"{GetApplicationDbConnectionString()}");
 
             var applicationDbConnectionString = GetApplicationDbConnectionString();
             var logDbConnectionString = GetApplicationDbConnectionString();
-
 
             services.AddDbContext<AppContext>(x => x.UseMySql(applicationDbConnectionString));
             services.AddDbContext<LogContext>(x => x.UseMySql(logDbConnectionString));
@@ -86,7 +81,6 @@ namespace Engenharia.WebApi
                 });
 
             services.AddAutoMapper();
-
             services.AddCors();
 
             services.AddMvc(options =>
@@ -124,6 +118,7 @@ namespace Engenharia.WebApi
                 app.UseHsts();
             }
 
+            // Initialize minimum configs for database (roles, SuperAdmin user, etc ... ) case not exists
             IdentityInitializer.SeedData(userManager, roleManager, AdminEmail, AdminPassword);
 
             app.ConfigureCustomExceptionMiddleware();

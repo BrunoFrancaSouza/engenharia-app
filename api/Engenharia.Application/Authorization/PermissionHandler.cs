@@ -1,5 +1,5 @@
 ﻿using Engenharia.Domain.Auth;
-using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
 using Engenharia.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

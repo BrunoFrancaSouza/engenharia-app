@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Engenharia.Domain.DTOs;
-using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
 
 namespace AssistenciaTecnica.WebAPI.Helpers
 {

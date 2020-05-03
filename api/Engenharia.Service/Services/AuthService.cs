@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Engenharia.Domain.DTOs;
-using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;

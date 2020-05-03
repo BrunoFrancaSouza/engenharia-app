@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿//using Engenharia.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 
-namespace Engenharia.Domain.Identity
+namespace Engenharia.Domain.Entities.Identity
 {
     public class UserRole : IdentityUserRole<int>
     {

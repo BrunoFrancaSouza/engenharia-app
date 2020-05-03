@@ -1,9 +1,9 @@
-mat-form-field{
+mat-form-field {
   width: 400px;
   /* border-top: 1px;; */
 }
 
-mat-card-title{
+mat-card-title {
   text-align: center;
 }
 
@@ -11,3 +11,9 @@ mat-card-title{
   max-width: 500px;
 }
 
+.container-permissions {
+}
+
+.card-header {
+  cursor: pointer;
+}

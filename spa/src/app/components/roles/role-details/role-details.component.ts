@@ -7,6 +7,7 @@ import { ErrorService } from 'src/app/services/errors/error.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DialogResult } from 'src/app/models/Enums/DialogResult.enum';
+import { Permission } from 'src/app/models/Entities/Permission';
 
 @Component({
   selector: 'app-role-details',
@@ -28,16 +29,16 @@ export class RoleDetailsComponent implements OnInit {
     private errorService: ErrorService,
     private notificationService: NotificationService,
     private activeModal: NgbActiveModal
-    // private location: Location
   ) { }
 
   ngOnInit() {
+    // console.log(this.role);
     this.validation();
     this.tittle = this.getTittle();
   }
 
   getRoleDescription() {
-    console.log('getRoleDescription -> ', this.role)
+    // console.log('getRoleDescription -> ', this.role)
     return this.role.description;
   }
 
@@ -91,4 +92,5 @@ export class RoleDetailsComponent implements OnInit {
 
     return this.form.get(controlName).errors;
   }
+
 }

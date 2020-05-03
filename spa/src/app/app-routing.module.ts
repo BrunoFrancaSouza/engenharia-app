@@ -4,12 +4,14 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { HomeComponent } from './components/home/home.component';
 import { RolesComponent } from './components/roles/roles.component';
+import { RolesPermissionsComponent } from './components/roles/roles-permissions/roles-permissions.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'roles', component: RolesComponent },
+  { path: 'permissions', component: RolesPermissionsComponent },
   // {
   //   path: 'user',
   //   component: RegistrationComponent,

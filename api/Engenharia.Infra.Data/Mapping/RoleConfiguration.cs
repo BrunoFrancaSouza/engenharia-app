@@ -1,4 +1,5 @@
-﻿using Engenharia.Domain.Identity;
+﻿//using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -24,7 +24,6 @@ export class RolesComponent implements OnInit {
   constructor(
     private roleService: RoleService,
     private errorService: ErrorService,
-    // public dialog: MatDialog,
     private modalService: NgbModal,
     private notificationService: NotificationService
   ) {
@@ -55,6 +54,8 @@ export class RolesComponent implements OnInit {
 
   getRoles() {
     this.loading = true;
+
+    this.filteredRoles = [];
 
     this.roleService.getAll().subscribe(
       (response: Role[]) => {
@@ -154,28 +155,6 @@ export class RolesComponent implements OnInit {
       (reason) => {
         console.log('reason', reason)
       });
-  }
-
-  editRole(role: Role) {
-    // const dialogRef = this.dialog.open(EditRoleComponent, {
-    //   data: { role }
-    // });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result === 1)
-    //     this.getRoles();
-    // });
-  }
-
-  deleteRole(role: Role) {
-    // const dialogRef = this.dialog.open(DeleteRoleComponent, {
-    //   data: { role }
-    // });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result === 1)
-    //     this.getRoles();
-    // });
   }
 
   deleteSelectedRoles(): void {

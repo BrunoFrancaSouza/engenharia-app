@@ -47,6 +47,29 @@
       <!-- </div> -->
     </div>
 
+    <!-- <hr class="solid">
+
+    <div class="container-fluid container-permissions" id="accordion">
+      <div class="card" *ngFor="let group of role.permissionsGrouped">
+        <div class="card-header" id="headingOne" data-toggle="collapse" [attr.data-target]="'#' + group.groupName">
+          <h3 class="mb-0">
+            {{group.groupName}}
+          </h3>
+        </div>
+
+        <div [id]="group.groupName" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            <h5 *ngFor="let permission of group.permissions">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [id]="permission.name">
+                <label class="custom-control-label" [for]="permission.name">{{permission.name}}</label>
+              </div>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
   </form>
 </div>
 

@@ -16,7 +16,7 @@ namespace Engenharia.Infra.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Engenharia.Domain.Identity.Role", b =>
+            modelBuilder.Entity("Engenharia.Domain.Entities.Identity.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -43,7 +43,7 @@ namespace Engenharia.Infra.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Engenharia.Domain.Identity.User", b =>
+            modelBuilder.Entity("Engenharia.Domain.Entities.Identity.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -95,7 +95,7 @@ namespace Engenharia.Infra.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Engenharia.Domain.Identity.UserRole", b =>
+            modelBuilder.Entity("Engenharia.Domain.Entities.Identity.UserRole", b =>
                 {
                     b.Property<int>("UserId");
 
@@ -119,9 +119,13 @@ namespace Engenharia.Infra.Data.Migrations
 
                     b.Property<int>("RoleId");
 
+                    b.Property<int?>("RoleId1");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
 
                     b.ToTable("AspNetRoleClaims");
                 });
@@ -176,14 +180,14 @@ namespace Engenharia.Infra.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Engenharia.Domain.Identity.UserRole", b =>
+            modelBuilder.Entity("Engenharia.Domain.Entities.Identity.UserRole", b =>
                 {
-                    b.HasOne("Engenharia.Domain.Identity.Role", "Role")
+                    b.HasOne("Engenharia.Domain.Entities.Identity.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Engenharia.Domain.Identity.User", "User")
+                    b.HasOne("Engenharia.Domain.Entities.Identity.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -191,15 +195,19 @@ namespace Engenharia.Infra.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Engenharia.Domain.Identity.Role")
+                    b.HasOne("Engenharia.Domain.Entities.Identity.Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Engenharia.Domain.Entities.Identity.Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Engenharia.Domain.Identity.User")
+                    b.HasOne("Engenharia.Domain.Entities.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -207,7 +215,7 @@ namespace Engenharia.Infra.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Engenharia.Domain.Identity.User")
+                    b.HasOne("Engenharia.Domain.Entities.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -215,7 +223,7 @@ namespace Engenharia.Infra.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Engenharia.Domain.Identity.User")
+                    b.HasOne("Engenharia.Domain.Entities.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

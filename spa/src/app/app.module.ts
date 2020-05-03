@@ -27,6 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { GlobalHttpInterceptorService } from './interceptors/http/global-http-Interceptor.service';
 import { RolesComponent } from './components/roles/roles.component';
 import { RoleDetailsComponent } from './components/roles/role-details/role-details.component';
+import { RolesPermissionsComponent } from './components/roles/roles-permissions/roles-permissions.component';
 
 @NgModule({
    declarations: [
@@ -36,7 +37,8 @@ import { RoleDetailsComponent } from './components/roles/role-details/role-detai
       HomeComponent,
       LoaderComponent,
       RolesComponent,
-      RoleDetailsComponent
+      RoleDetailsComponent,
+      RolesPermissionsComponent
    ],
    imports: [
       BrowserModule,

@@ -1,0 +1,65 @@
+<div class="container roles-page">
+
+  <mat-toolbar id="toolbar" color="secondary">
+    <mat-toolbar-row class="page-header">
+      Roles x Permissões
+
+      <button mat-icon-button color="accent" title="Recarregar" (click)="getRoles()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="form-group select-roles">
+    <!-- <label for="exampleFormControlSelect1">Example select</label> -->
+    <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectedRole" (change)="onChangeSelect()">
+      <option value="" selected disabled>Selecione a role</option>
+      <option *ngFor="let role of roles" [ngValue]="role">{{role.name}}</option>
+    </select>
+  </div>
+
+  <div class="row" *ngIf="selectedRole">
+    <div class="col-sm-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Permissões Disponíveis</h5>
+          <div class="card-text">
+            <div class="custom-control custom-checkbox" *ngFor="let permission of availablePermissions">
+              <input type="checkbox" class="custom-control-input" [(ngModel)]="permission.checked" [id]="permission.name"
+                     (change)="onChangeCheckbox()">
+              <label class="custom-control-label" [for]="permission.name">
+                {{permission.name}}<h5 class="card-title">{{permission.description}}</h5>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-2 permission-actions">
+      <button mat-button color="accent" title="Adicionar selecionados" [disabled]="!hasAvailablePermissionSelected()"
+              (click)="addSelectedPermissions()">
+        <mat-icon>arrow_right</mat-icon>
+      </button>
+      <button mat-button color="accent" title="Remover selecionados" [disabled]="!hasDefinedPermissionSelected()"
+              (click)="removeSelectedPermissions()">
+        <mat-icon>arrow_left</mat-icon>
+      </button>
+    </div>
+
+    <div class="col-sm-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Permissões Definidas</h5>
+          <div class="card-text">
+            <div class="custom-control custom-checkbox" *ngFor="let permission of selectedRole.permissions">
+              <input type="checkbox" class="custom-control-input" [id]="permission.name" [(ngModel)]="permission.checked">
+              <label class="custom-control-label" [for]="permission.name">{{permission.name}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

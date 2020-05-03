@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Engenharia.Domain.DTOs;
-using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
 using Engenharia.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

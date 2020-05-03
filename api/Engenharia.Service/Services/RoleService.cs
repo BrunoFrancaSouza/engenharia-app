@@ -1,11 +1,16 @@
 ﻿using AutoMapper;
+using Engenharia.Domain.Auth;
 using Engenharia.Domain.DTOs;
-using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
+using Engenharia.Domain.Enums;
+using Engenharia.Domain.Models;
+//using Engenharia.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Engenharia.Service.Services
@@ -23,21 +28,104 @@ namespace Engenharia.Service.Services
             this.mapper = mapper;
         }
 
-        public new List<RoleDto> GetAll()
+        public new async Task<List<RoleDto>> GetAll()
         {
-            var roles = roleManager.Roles.Select(r => new RoleDto
+            var permissionService = new PermissionService();
+
+            var roles = await roleManager.Roles.Select(r => new Role
             {
                 Id = r.Id,
                 Name = r.Name,
                 Description = r.Description,
-                Active = r.Active
+                Active = r.Active,
             })
+            .ToListAsync();
+
+            roles.ForEach(r => r.RoleClaims = roleManager.GetClaimsAsync(r).Result.Select(c => new IdentityRoleClaim<int>
+            {
+                //Id = c.,
+                RoleId = r.Id,
+                ClaimType = c.Type,
+                ClaimValue = c.Value
+            }));
+
+            var rolesDto = roles.Select(r => new RoleDto
+            {
+                Id = r.Id,
+                Name = r.Name,
+                Description = r.Description,
+                Active = r.Active,
+                Permissions = r.RoleClaims.Select(c => new PermissionDto
+                {
+                    Id = (int)Enum.Parse(typeof(Permissions), c.ClaimValue),
+                    Name = permissionService.GetPermissionName(int.Parse(c.ClaimValue)),
+                    Description = permissionService.GetDescription(int.Parse(c.ClaimValue)),
+                    IsActive = permissionService.PermissionIsActive(int.Parse(c.ClaimValue)),
+                })
+            })
+            .OrderBy(r => r.Name)
             .ToList();
 
-            var response = mapper.Map<List<RoleDto>>(roles);
-
-            return response;
+            return rolesDto;
         }
+
+        //public async Task<List<RoleDto>> GetAllGrouped()
+        //{
+        //    var permissionService = new PermissionService();
+
+        //    var roles = await roleManager.Roles.Select(r => new Role
+        //    {
+        //        Id = r.Id,
+        //        Name = r.Name,
+        //        Description = r.Description,
+        //        Active = r.Active,
+        //    })
+        //    .ToListAsync();
+
+        //    roles.ForEach(r => r.RoleClaims = roleManager.GetClaimsAsync(r).Result.Select(c => new RoleClaim
+        //    {
+        //        //Id = c.,
+        //        RoleId = r.Id,
+        //        ClaimType = c.Type,
+        //        ClaimValue = c.Value
+        //    }));
+
+        //    var rolesDto = roles.Select(r => new RoleDto
+        //    {
+        //        Id = r.Id,
+        //        Name = r.Name,
+        //        Description = r.Description,
+        //        Active = r.Active,
+        //        PermissionsGrouped = r.RoleClaims.Select(c => new
+        //        {
+        //            Id = (int)Enum.Parse(typeof(Permissions), c.ClaimValue),
+        //            Name = permissionService.GetPermissionName(int.Parse(c.ClaimValue)),
+        //            Description = permissionService.GetDescription(int.Parse(c.ClaimValue)),
+        //            IsActive = permissionService.PermissionIsActive(int.Parse(c.ClaimValue)),
+        //            GroupName = permissionService.GetPermissionGroupName(int.Parse(c.ClaimValue))
+
+        //        })
+        //        .GroupBy(x => x.GroupName)
+        //        .Select(g => new PermissionsGroupedDto
+        //        {
+        //            GroupName = g.Key,
+        //            Permissions = g.Select(s => new PermissionDto
+        //            {
+        //                Id = s.Id,
+        //                Name = s.Name,
+        //                Description = s.Description,
+        //                IsActive = s.IsActive
+        //            })
+        //            .ToList()
+        //        })
+        //        .ToList()
+
+        //    })
+        //    .OrderBy(r => r.Name)
+        //    .ToList();
+
+        //    return rolesDto;
+        //}
 
         public async Task<RoleDto> GetById(string id)
         {
@@ -62,15 +150,6 @@ namespace Engenharia.Service.Services
 
             if (result.Succeeded)
                 return mapper.Map<RoleDto>(role);
-
-            //var adminRole = await roleManager.FindByNameAsync(role.Name);
-            //await roleManager.AddClaimAsync(adminRole, new Claim(CustomClaimTypes.Permission, Permissions.RoleCreate.ValueToString()));
-            //await roleManager.AddClaimAsync(adminRole, new Claim(CustomClaimTypes.Permission, Permissions.RoleView.ValueToString()));
-
-            //var superAdmin = await userManager.FindByIdAsync("1");
-            ////await userManager.CreateAsync(superAdmin);
-            //await userManager.AddToRoleAsync(superAdmin, role.Name);
-
 
             var error = result.Errors.First();
 
@@ -132,7 +211,32 @@ namespace Engenharia.Service.Services
             }
 
             return true;
+        }
 
+        public async Task<bool> UpdatePermissions(RoleUpdatePermissionsDto roleUpdatePermissionsDto)
+        {
+            if (roleUpdatePermissionsDto == null)
+                throw new ArgumentException("Parâmetro 'roleUpdatePermissionsDto' incorreto");
+
+            var roleDto = roleUpdatePermissionsDto.Role;
+            var role = await roleManager.FindByIdAsync(roleDto.Id.Value.ToString());
+            var permissionsIds = roleUpdatePermissionsDto.PermissionIds;
+
+            foreach (var permissionId in permissionsIds)
+            {
+                IdentityResult result = null;
+
+                if (roleUpdatePermissionsDto.UpdateType == UpdateTypes.Create)
+                    result = await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permissionId.ToString()));
+
+                if (roleUpdatePermissionsDto.UpdateType == UpdateTypes.Delete)
+                    result = await roleManager.RemoveClaimAsync(role, new Claim(CustomClaimTypes.Permission, permissionId.ToString()));
+
+                if (result != null && result.Succeeded == false)
+                    throw new Exception(result.Errors.ToString());
+            }
+
+            return true;
         }
     }
 }

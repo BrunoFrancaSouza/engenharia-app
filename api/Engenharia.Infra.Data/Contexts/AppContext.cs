@@ -1,5 +1,6 @@
 ﻿//using Engenharia.Domain.Entities;
-using Engenharia.Domain.Identity;
+using Engenharia.Domain.Entities.Identity;
+//using Engenharia.Domain.Identity;
 using Engenharia.Infra.Data.Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

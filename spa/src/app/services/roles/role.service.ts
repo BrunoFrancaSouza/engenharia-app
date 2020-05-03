@@ -7,6 +7,8 @@ import { Observable, throwError } from 'rxjs';
 import { NotificationService } from '../notification/notification.service';
 import { ErrorService } from '../errors/error.service';
 import { CrudService } from '../crud/crud.service';
+import { Permission } from 'src/app/models/Entities/Permission';
+import { RoleUpdatePermissionsDto } from 'src/app/models/DTOs/RoleUpdatePermissionsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,80 +24,12 @@ export class RoleService extends CrudService<Role, number> {
     super(http, `${environment.apiEndpoint}/api/role`);
   }
 
-  // getAll(): Observable<Role[]> {
-  //   var url = `${this.baseUrl}/GetAll`;
-  //   return this.http.get(url).pipe(
-  //     map((response: any) => {
-  //       // console.log('response', response)
-  //       return response.map(item => {
-  //         return new Role(
-  //           item.id,
-  //           item.name,
-  //           item.description,
-  //           item.active,
-  //           false
-  //         );
-  //       });
-  //     }),
-  //     catchError((error) => {
-  //       console.log('error caught in service')
-  //       console.error(error);
+  updatePermissions(roleUpdatePermissions: RoleUpdatePermissionsDto): Observable<Role> {
+    return this.http.post<Role>(`${this.baseUrl}/UpdatePermissions`, roleUpdatePermissions);
+  }
 
-  //       return throwError(error);
-  //     })
-  //   );
-  // }
-
-  // getById(id: number): Observable<Role> {
-  //   var url = `${this.baseUrl}/${id.toString()}`;
-  //   return this.http.get<Role>(url);
-  // }
-
-  // create(role: Role): Observable<Role> {
-  //   // create(role: Role) {
-
-  //   var url = `${this.baseUrl}/Create`;
-
-  //   // this.http.post(url, role).subscribe(
-  //   //   response => {
-  //   //     this.notificationService.showSuccess('Adicionado com sucesso');
-  //   //     return true;
-  //   //   },
-  //   //   error => {
-  //   //     this.errorService.handleError('Erro', error);
-  //   //     return false;
-  //   //   }
-  //   // );
-
-  //   this.http.post(url, role).pipe(
-  //     map((response: any) => {
-  //       return new Role(
-  //         response.id,
-  //         response.name,
-  //         response.description,
-  //         response.active,
-  //         false
-  //       );
-  //     }),
-  //     catchError((error) => {
-  //       console.log('error caught in service')
-  //       console.error(error);
-
-  //       return throwError(error);
-  //     })
-  //   );
-
-  // }
-
-  // delete(roleId: number): void {
-  //   var url = `${this.baseUrl}/${roleId}`;
-
-  //   this.http.delete(url).subscribe(role => {
-  //     this.notificationService.showSuccess('Deletado com sucesso');
-  //   },
-  //     error => {
-  //       this.errorService.handleError('Erro', error);
-  //     });
+  // removePermissions(roleUpdatePermissions: RoleUpdatePermissionsDto): Observable<Role> {
+  //   return this.http.post<Role>(`${this.baseUrl}/RemovePermissions`, roleUpdatePermissions);
   // }
 
 }

@@ -1,0 +1,28 @@
+.roles-page {
+  margin-top: 20px;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 100px; */
+}
+
+.sortable,
+.editable {
+  cursor: pointer;
+}
+
+mat-toolbar {
+  margin-bottom: 10px;
+}
+
+.permission-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* vertical-align: middle; */
+  justify-content: center;
+}
