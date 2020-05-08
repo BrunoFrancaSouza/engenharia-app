@@ -28,6 +28,8 @@ import { GlobalHttpInterceptorService } from './interceptors/http/global-http-In
 import { RolesComponent } from './components/roles/roles.component';
 import { RoleDetailsComponent } from './components/roles/role-details/role-details.component';
 import { RolesPermissionsComponent } from './components/roles/roles-permissions/roles-permissions.component';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { PageComponent } from './components/shared/page/page.component';
 
 @NgModule({
    declarations: [
@@ -38,7 +40,9 @@ import { RolesPermissionsComponent } from './components/roles/roles-permissions/
       LoaderComponent,
       RolesComponent,
       RoleDetailsComponent,
-      RolesPermissionsComponent
+      RolesPermissionsComponent,
+      HeaderComponent,
+      PageComponent,
    ],
    imports: [
       BrowserModule,

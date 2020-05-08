@@ -1,10 +1,12 @@
 ﻿using Engenharia.Domain.Auth;
 using Engenharia.Domain.DTOs;
+using Engenharia.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace Engenharia.Service.Services
 {
@@ -67,6 +69,39 @@ namespace Engenharia.Service.Services
             return result;
         }
 
+        public List<PermissionDto> GetFromRoleClaims(List<Claim> claims)
+        {
+            var permissionClaims = claims.Where(c => c.Type == CustomClaimTypes.Permission);
+
+            if (permissionClaims == null)
+                return null;
+
+            var permissions = permissionClaims.Select(c => new
+            {
+                Permission = (Permissions)int.Parse(c.Value),
+            }).ToList();
+
+            var result = permissions
+            .Select(p => new
+            {
+                Id = GetValue(p.Permission.ToString()),
+                GroupName = GetGroupName(p.Permission.ToString()),
+                Name = p.Permission.ToString(),
+                Description = GetDescription(p.Permission.ToString()),
+                IsActive = PermissionIsActive(p.Permission.ToString()),
+            })
+            .Select(p => new PermissionDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                IsActive = p.IsActive
+            })
+            .OrderBy(p => p.Name)
+            .ToList();
+
+            return result;
+        }
 
         public bool PermissionIsActive(string permission)
         {

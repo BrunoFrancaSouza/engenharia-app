@@ -18,13 +18,14 @@ namespace Engenharia.Service.Services
     public class RoleService<TContext> : BaseService<Role, TContext> where TContext : DbContext
     {
         private readonly RoleManager<Role> roleManager;
-        private readonly UserManager<User> userManager;
+        //private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
 
-        public RoleService(RoleManager<Role> roleManager, UserManager<User> userManager, IMapper mapper)
+        //public RoleService(RoleManager<Role> roleManager, UserManager<User> userManager, IMapper mapper)
+        public RoleService(RoleManager<Role> roleManager, IMapper mapper)
         {
             this.roleManager = roleManager;
-            this.userManager = userManager;
+            //this.userManager = userManager;
             this.mapper = mapper;
         }
 
@@ -238,5 +239,22 @@ namespace Engenharia.Service.Services
 
             return true;
         }
+
+        public async Task<IEnumerable<Claim>> GetRoleClaims(string roleId, string claimType = null)
+        {
+            if (string.IsNullOrEmpty(roleId))
+                throw new ArgumentException("Parâmetro 'roleId' incorreto");
+
+            var role = await roleManager.FindByIdAsync(roleId);
+            var result = await roleManager.GetClaimsAsync(role);
+            result = result.OrderBy(c => c.Type).ThenBy(c => c.Value).ToList();
+
+            if (claimType == null)
+                return result;
+
+            return result.Where(c => c.Type == claimType).ToList();
+        }
+
+
     }
 }

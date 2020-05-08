@@ -2,7 +2,7 @@
 
   <mat-toolbar id="toolbar" color="secondary">
     <mat-toolbar-row class="page-header">
-      Roles x Permissões
+      Roles x Permissions
 
       <button mat-icon-button color="accent" title="Recarregar" (click)="getRoles()">
         <mat-icon>refresh</mat-icon>
@@ -25,8 +25,7 @@
           <h5 class="card-title">Permissões Disponíveis</h5>
           <div class="card-text">
             <div class="custom-control custom-checkbox" *ngFor="let permission of availablePermissions">
-              <input type="checkbox" class="custom-control-input" [(ngModel)]="permission.checked" [id]="permission.name"
-                     (change)="onChangeCheckbox()">
+              <input type="checkbox" class="custom-control-input" [(ngModel)]="permission.checked" [id]="permission.name">
               <label class="custom-control-label" [for]="permission.name">
                 {{permission.name}}<h5 class="card-title">{{permission.description}}</h5>
               </label>
@@ -37,13 +36,22 @@
     </div>
 
     <div class="col-sm-2 permission-actions">
-      <button mat-button color="accent" title="Adicionar selecionados" [disabled]="!hasAvailablePermissionSelected()"
+      <!-- <button type="button" class="btn btn-custom-color">Salvar</button> -->
+      <button class='btn btn-sm action-buttons' title="Adicionar selecionados"
+              [disabled]="!hasAvailablePermissionSelected()"
               (click)="addSelectedPermissions()">
-        <mat-icon>arrow_right</mat-icon>
+        <div style='text-align:center;'>
+          <i class="fas fa-arrow-right d-none d-sm-block"></i>
+          <i class="fas fa-arrow-down d-block d-sm-none"></i>
+        </div>
       </button>
-      <button mat-button color="accent" title="Remover selecionados" [disabled]="!hasDefinedPermissionSelected()"
+      <button class='btn btn-sm action-buttons' title="Remover selecionados"
+              [disabled]="!hasDefinedPermissionSelected()"
               (click)="removeSelectedPermissions()">
-        <mat-icon>arrow_left</mat-icon>
+        <div style='text-align:center;'>
+          <i class="fas fa-arrow-left d-none d-sm-block"></i>
+          <i class="fas fa-arrow-up d-block d-sm-none"></i>
+        </div>
       </button>
     </div>
 
@@ -52,7 +60,7 @@
         <div class="card-body">
           <h5 class="card-title">Permissões Definidas</h5>
           <div class="card-text">
-            <div class="custom-control custom-checkbox" *ngFor="let permission of selectedRole.permissions">
+            <div class="custom-control custom-checkbox" *ngFor="let permission of definedPermissions">
               <input type="checkbox" class="custom-control-input" [id]="permission.name" [(ngModel)]="permission.checked">
               <label class="custom-control-label" [for]="permission.name">{{permission.name}}</label>
             </div>

@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, HostListener, ViewEncapsulation, Input } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RoleService } from 'src/app/services/roles/role.service';
 import { Role } from 'src/app/models/Entities/Role';
 import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -12,7 +11,7 @@ import { Permission } from 'src/app/models/Entities/Permission';
 @Component({
   selector: 'app-role-details',
   templateUrl: './role-details.component.html',
-  styleUrls: ['./role-details.css']
+  styleUrls: ['./role-details.scss']
 })
 export class RoleDetailsComponent implements OnInit {
 

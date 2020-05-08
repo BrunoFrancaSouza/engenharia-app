@@ -26,3 +26,19 @@ mat-toolbar {
   /* vertical-align: middle; */
   justify-content: center;
 }
+
+.action-buttons {
+  background-color: transparent;
+}
+
+.action-buttons:disabled {
+  pointer-events: none;
+}
+
+@media only screen and (max-width: 575.98px) {
+  .permission-actions {
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}

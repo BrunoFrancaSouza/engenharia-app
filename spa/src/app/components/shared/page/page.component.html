@@ -1,0 +1,18 @@
+<!-- <div class="example-container" [class.example-is-mobile]="mobileQuery.matches"> -->
+<mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+               [fixedTopGap]="mobileQuery.matches ? '112' : '56'">
+    <mat-nav-list>
+      <!-- <a mat-list-item routerLink="." *ngFor="let option of options">{{ option }}</a> -->
+      <a mat-list-item routerLink="/login">Login</a>
+      <a mat-list-item routerLink="/registration">Registrar</a>
+      <a mat-list-item routerLink="/roles">Roles</a>
+      <a mat-list-item routerLink="/permissions">Roles x Permissions</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="page-wrapper">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<!-- </div> -->

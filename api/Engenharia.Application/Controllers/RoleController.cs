@@ -22,13 +22,14 @@ namespace Engenharia.WebApi.Controllers
 
         private RoleService<AppContext> roleService;
 
-        public RoleController(RoleManager<Role> roleManager, UserManager<User> userManager, IMapper mapper)
+        //public RoleController(RoleManager<Role> roleManager, UserManager<User> userManager, IMapper mapper)
+        public RoleController(RoleManager<Role> roleManager, IMapper mapper)
         {
             //this.roleManager = roleManager;
             //this.userManager = userManager;
             //this.mapper = mapper;
 
-            roleService = new RoleService<AppContext>(roleManager, userManager, mapper);
+            roleService = new RoleService<AppContext>(roleManager, mapper);
         }
 
         //[AllowAnonymous]

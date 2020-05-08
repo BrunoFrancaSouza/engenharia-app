@@ -3,7 +3,6 @@ import { Role } from 'src/app/models/Entities/Role';
 import { RoleService } from 'src/app/services/roles/role.service';
 import { ErrorService } from 'src/app/services/errors/error.service';
 import { Permission } from 'src/app/models/Entities/Permission';
-import { PermissionsGrouped } from 'src/app/models/Entities/Permissions';
 import { PermissionService } from 'src/app/services/permissions/permission.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { RoleUpdatePermissionsDto } from 'src/app/models/DTOs/RoleUpdatePermissionsDto';
@@ -12,10 +11,9 @@ import { UpdateTypes } from 'src/app/models/Enums/UpdateTypes.enum';
 @Component({
   selector: 'app-roles-permissions',
   templateUrl: './roles-permissions.component.html',
-  styleUrls: ['./roles-permissions.component.css']
+  styleUrls: ['./roles-permissions.component.scss']
 })
 export class RolesPermissionsComponent implements OnInit {
-
 
   roles: Role[];
   selectedRole: Role;
@@ -46,6 +44,23 @@ export class RolesPermissionsComponent implements OnInit {
     this.roleService.getAll().subscribe(
       (response: Role[]) => {
         this.roles = response;
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        this.errorService.handleError('Erro ao buscar roles.', error);
+      }
+    ).add(() => {
+      //Called when operation is complete (both success and error)
+      this.loading = false;
+    })
+  }
+
+  refreshRolePermissions(roleId: number) {
+    this.permissionService.getByRole(roleId).subscribe(
+      (response: Permission[]) => {
+        this.definedPermissions = response;
+        this.availablePermissions = this.getAvailablePermissions(this.definedPermissions);
         this.loading = false;
       },
       error => {
@@ -93,11 +108,6 @@ export class RolesPermissionsComponent implements OnInit {
     }
 
     return result;
-  }
-
-  onChangeCheckbox(): void {
-    // if this.availablePermissions.filter(p => p.checked == true).length !== 0)
-
   }
 
   getAvailablePermissionsSelected(): Permission[] {
@@ -149,9 +159,9 @@ export class RolesPermissionsComponent implements OnInit {
 
     this.roleService.updatePermissions(roleUpdatePermissionsDto).subscribe(
       response => {
-        var msg = `Permissões ${updateType == UpdateTypes.Create ? 'adicionadas' : 'removidas'} com sucesso.` 
-        this.notificationService.showSuccess("Permissões desvinculadas com sucesso")
-        this.getRoles();
+        var msg = `Permissões ${updateType == UpdateTypes.Create ? 'adicionadas' : 'removidas'} com sucesso.`
+        this.notificationService.showSuccess(msg)
+        this.refreshRolePermissions(role.id);
       },
       error => {
         this.errorService.handleError("Erro ao desvincular permissões", error)

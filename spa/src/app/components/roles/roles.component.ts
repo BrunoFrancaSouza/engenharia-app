@@ -11,7 +11,7 @@ import { DialogResult } from 'src/app/models/Enums/DialogResult.enum';
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
-  styleUrls: ['./roles.component.css']
+  styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
 

@@ -16,5 +16,10 @@ export class PermissionService extends CrudService<Permission, number> {
     super(http, `${environment.apiEndpoint}/api/permission`);
   }
 
+  getByRole(roleId: number): Observable<Permission[]> {
+    var url = `${this.baseUrl}/GetByRole?roleId=${roleId}`;
+    return this.http.get<Permission[]>(url)
+  }
+
 
 }
