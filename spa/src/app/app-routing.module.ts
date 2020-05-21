@@ -5,6 +5,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { HomeComponent } from './components/home/home.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { RolesPermissionsComponent } from './components/roles/roles-permissions/roles-permissions.component';
+import { FacebookLoginComponent } from './components/login/facebook-login/facebook-login.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'roles', component: RolesComponent },
   { path: 'permissions', component: RolesPermissionsComponent },
+  { path: 'login/facebook', component: FacebookLoginComponent },
   // {
   //   path: 'user',
   //   component: RegistrationComponent,

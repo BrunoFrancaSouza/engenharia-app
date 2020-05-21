@@ -66,19 +66,30 @@ namespace Engenharia.WebApi
             builder.AddRoleManager<RoleManager<Role>>();
             builder.AddSignInManager<SignInManager<User>>();
 
-            // Configuração JWT
+           
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+            .AddJwtBearer(options =>  // Configuração JWT
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtSecret)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtSecret)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
 
-                });
+            })
+            .AddGoogle(options =>
+            {
+                options.ClientId = Configuration["GOOGLE_AUTH_CLIENT_ID"];
+                options.ClientSecret = Configuration["GOOGLE_AUTH_CLIENT_SECRET"];
+            })
+            .AddFacebook(options =>
+            {
+                options.AppId = Configuration["FACEBOOK_AUTH_APP_ID"];
+                options.AppSecret = Configuration["FACEBOOK_AUTH_APP_SECRET"];
+            })
+            ;
 
             services.AddAutoMapper();
             services.AddCors();

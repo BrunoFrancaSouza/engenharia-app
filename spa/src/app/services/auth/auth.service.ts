@@ -41,8 +41,35 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  getToken(){
+  getToken() {
     return localStorage.getItem("token");
+  }
+
+  facebookLogin(accessToken: string) {
+    // let headers = new Headers();
+    // headers.append('Content-Type', 'application/json');
+    // let body = JSON.stringify({ accessToken });
+    // return this.http
+    //   .post(this.baseUrl + '/externalauth/facebook', body, { headers })
+    //   .map(res => res.json())
+    //   .map(res => {
+    //     localStorage.setItem('auth_token', res.auth_token);
+    //     // this.loggedIn = true;
+    //     // this._authNavStatusSource.next(true);
+    //     return true;
+    //   })
+    // .catch(this.handleError);
+
+    return this.http
+      .post(`${this.baseUrl}/Login/Facebook`, accessToken).pipe(
+        map((response: any) => {
+          const user = response;
+          if (user) {
+            localStorage.setItem('token', user.token);
+            this.decodedToken = this.jwtHelper.decodeToken(user.token);
+          }
+        })
+      );
   }
 
 }

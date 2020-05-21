@@ -1,38 +1,44 @@
 <mat-toolbar id="toolbar" color="primary" onresize="setSideNavFixedTop()">
-  <mat-toolbar-row class="toolbar">
-      <div>
-          <div *ngIf="!isLoggedIn()">
-              <button mat-button>
-                  <mat-icon>home</mat-icon>
-                  Página Inicial
-              </button>
-          </div>
-          <div *ngIf="isLoggedIn()">
-              <button mat-button>
-                  <mat-icon *ngIf="isLoggedIn()" (click)="toggleSidenav()">menu</mat-icon>
-              </button>
-          </div>
-      </div>
-      <div fxShow="true" fxHide.lt-sm="true">
-          <a *ngFor="let menu of menuOptions" mat-button routerLink="./roles">{{ menu }}</a>
-      </div>
-      <span class="spacer"></span>
-      <div class="btn-group">
-          <button *ngIf="isLoggedIn()" mat-button type="button" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <mat-icon>account_circle</mat-icon>
-              <span fxShow="true" fxHide.lt-sm="true">Usuário</span>
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-      </div>
-  </mat-toolbar-row>
-  <mat-toolbar-row *ngIf="isLoggedIn() && hasMenuOptions()" class="toolbar" fxShow="false" fxHide.lt-sm="false">
-      <a *ngFor="let menu of menuOptions" mat-button routerLink=".">{{ menu }}</a>
-  </mat-toolbar-row>
+    <mat-toolbar-row class="toolbar">
+        <div>
+            <div *ngIf="!isLoggedIn()">
+                <button mat-button>
+                    <mat-icon>home</mat-icon>
+                    Página Inicial
+                </button>
+                <!-- <button class='btn btn-md' title="Home">
+                    <i class="fas fa-home fa-lg"></i>
+                </button> -->
+            </div>
+            <div *ngIf="isLoggedIn()">
+                <button mat-button class="small" (click)="toggleSidenav()">
+                    <mat-icon *ngIf="isLoggedIn()">menu</mat-icon>
+                </button>
+                <!-- <button class='btn btn-sm' title="Menu" (click)="toggleSidenav()">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button> -->
+            </div>
+        </div>
+        <div fxShow="true" fxHide.lt-sm="true">
+            <button mat-button *ngFor="let menu of menuOptions" routerLink="./login">{{ menu }}</button>
+        </div>
+        <span class="spacer"></span>
+        <div class="btn-group">
+            <button *ngIf="isLoggedIn()" mat-button type="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                <mat-icon>account_circle</mat-icon>
+                <span fxShow="true" fxHide.lt-sm="true">Usuário</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item">Action</a>
+                <a class="dropdown-item">Another action</a>
+                <a class="dropdown-item">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item">Separated link</a>
+            </div>
+        </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="isLoggedIn() && hasMenuOptions()" class="toolbar" fxShow="false" fxHide.lt-sm="false">
+        <a *ngFor="let menu of menuOptions" mat-button routerLink=".">{{ menu }}</a>
+    </mat-toolbar-row>
 </mat-toolbar>

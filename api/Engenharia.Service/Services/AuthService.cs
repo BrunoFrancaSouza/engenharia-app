@@ -13,14 +13,15 @@ namespace Engenharia.Service.Services
     {
         private readonly IConfiguration config;
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
+        //private readonly SignInManager<User> signInManager;
         private readonly IMapper mapper;
 
-        public AuthService(IConfiguration config, UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper)
+        //public AuthService(IConfiguration config, UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper)
+        public AuthService(IConfiguration config, UserManager<User> userManager, IMapper mapper)
         {
             this.config = config;
             this.userManager = userManager;
-            this.signInManager = signInManager;
+            //this.signInManager = signInManager;
             this.mapper = mapper;
         }
 
@@ -35,6 +36,36 @@ namespace Engenharia.Service.Services
 
         }
 
+        //public async Task<string> GenerateJWToken(User user)
+        //{
+        //    var claims = new List<Claim>
+        //    {
+        //        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        //        new Claim(ClaimTypes.Name, user.UserName),
+        //    };
 
+        //    var roles = await userManager.GetRolesAsync(user);
+
+        //    foreach (var role in roles)
+        //    {
+        //        claims.Add(new Claim(ClaimTypes.Role, role));
+        //    }
+
+        //    var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config["JWT_SECRET"]));
+
+        //    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new ClaimsIdentity(claims),
+        //        Expires = DateTime.Now.AddDays(7),
+        //        SigningCredentials = credentials
+        //    };
+
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+
+        //    return tokenHandler.WriteToken(token);
+        //}
     }
 }

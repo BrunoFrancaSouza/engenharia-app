@@ -9,7 +9,8 @@ namespace AssistenciaTecnica.WebAPI.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<User, UserLoginDto>().ReverseMap();
+            CreateMap<User, LoginRequestDto>().ReverseMap();
+            CreateMap<User, LoginResponseDto>().ReverseMap();
             CreateMap<Role, RoleDto>().ReverseMap();
         }
     }
